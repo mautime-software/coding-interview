@@ -44,10 +44,10 @@ public class HeapSort {
         }
     }
 
-    private static void sortHeap(int[] nums) {
-        for (int i = nums.length - 1; i >= 0; i--) {
-            swap(nums, 0, i); //swap
-            heapify(nums, 0, i); //remove (already removed), heapify
+    private static void sortHeap(int[] heap) {
+        for (int i = heap.length - 1; i >= 0; i--) {
+            swap(heap, 0, i); //swap
+            heapify(heap, 0, i); //remove (already removed), heapify
         }
     }
 
