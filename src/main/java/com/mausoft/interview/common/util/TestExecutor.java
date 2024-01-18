@@ -23,8 +23,8 @@ public class TestExecutor {
         printTestCaseResults(execute(function, testCases));
     }
 
-    private static <T> List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
-        return Arrays.stream(testCases).peek(function).map(e -> new TestResults(e)).collect(Collectors.toList());
+    private static List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
+        return Arrays.stream(testCases).peek(function).map(TestResults::new).collect(Collectors.toList());
     }
 
     private static void printTestCaseResults(List<TestResults> testCaseResults) {
