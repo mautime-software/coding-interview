@@ -11,8 +11,8 @@ public class TestExecutor {
         printTestCaseResults(execute(function, testCases));
     }
 
-    public static <U> List<Object[]> execute(Function<Object[], U> function, Object[][] testCases) {
-        return Arrays.stream(testCases).map(e -> new Object[]{e, execute(function, e)}).collect(Collectors.toList());
+    public static <U> List<TestResults> execute(Function<Object[], U> function, Object[][] testCases) {
+        return Arrays.stream(testCases).map(e -> new TestResults(e, execute(function, e))).collect(Collectors.toList());
     }
 
     public static <T, U> U execute(Function<T[], U> function, T... params) {
@@ -23,16 +23,16 @@ public class TestExecutor {
         printTestCaseResults(execute(function, testCases));
     }
 
-    public static <T> List<Object[]> execute(Consumer<Object[]> function, Object[][] testCases) {
-        return Arrays.stream(testCases).peek(function).map(e -> new Object[]{e}).collect(Collectors.toList());
+    public static <T> List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
+        return Arrays.stream(testCases).peek(function).map(e -> new TestResults(e)).collect(Collectors.toList());
     }
 
-    private static void printTestCaseResults(List<Object[]> testCaseResults) {
-        if (testCaseResults.get(0).length == 1) {
-            testCaseResults.forEach(e -> System.out.println(formatParams((Object[]) e[0])));
+    private static void printTestCaseResults(List<TestResults> testCaseResults) {
+        if (testCaseResults.get(0).getResult() == null) {
+            testCaseResults.forEach(e -> System.out.println(formatParams(e.getParams())));
             return;
         }
-        testCaseResults.forEach(e -> System.out.println(formatParams((Object[]) e[0]) + " -> " + formatParam(e[1])));
+        testCaseResults.forEach(e -> System.out.println(formatParams(e.getParams()) + " -> " + formatParam(e.getResult())));
     }
 
     private static String formatParam(Object param) {
@@ -59,5 +59,27 @@ public class TestExecutor {
         strBuilder.delete(strBuilder.length() - 2, strBuilder.length());
         strBuilder.append("]");
         return strBuilder.toString();
+    }
+
+    private static class TestResults {
+        private Object[] params;
+        private Object result;
+
+        public TestResults(Object[] aParams) {
+            params = aParams;
+        }
+
+        public TestResults(Object[] aParams, Object aResult) {
+            params = aParams;
+            result = aResult;
+        }
+
+        public Object[] getParams() {
+            return params;
+        }
+
+        public Object getResult() {
+            return result;
+        }
     }
 }
