@@ -11,11 +11,11 @@ public class TestExecutor {
         printTestCaseResults(execute(function, testCases));
     }
 
-    public static <U> List<TestResults> execute(Function<Object[], U> function, Object[][] testCases) {
+    private static <U> List<TestResults> execute(Function<Object[], U> function, Object[][] testCases) {
         return Arrays.stream(testCases).map(e -> new TestResults(e, execute(function, e))).collect(Collectors.toList());
     }
 
-    public static <T, U> U execute(Function<T[], U> function, T... params) {
+    private static <T, U> U execute(Function<T[], U> function, T... params) {
         return function.apply(params);
     }
 
@@ -23,7 +23,7 @@ public class TestExecutor {
         printTestCaseResults(execute(function, testCases));
     }
 
-    public static <T> List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
+    private static <T> List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
         return Arrays.stream(testCases).peek(function).map(e -> new TestResults(e)).collect(Collectors.toList());
     }
 
