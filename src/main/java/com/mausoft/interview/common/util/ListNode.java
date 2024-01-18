@@ -1,5 +1,8 @@
 package com.mausoft.interview.common.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ListNode<T> {
     private T value;
     private ListNode<T> next;
@@ -36,13 +39,18 @@ public class ListNode<T> {
     }
 
     public String toString() {
-        return "[" + _toString() + "]";
+        Set<ListNode<T>> visited = new HashSet<>();
+        return "[" + _toString(visited) + "]";
     }
 
-    private String _toString() {
+    private String _toString(Set<ListNode<T>> visited) {
+        if (visited.contains(this)) {
+            return "cycled -> " + value;
+        }
+        visited.add(this);
         if (next == null) {
             return value.toString();
         }
-        return value + ", " + next._toString();
+        return value + ", " + next._toString(visited);
     }
 }
