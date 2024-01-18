@@ -2,6 +2,7 @@ package com.mausoft.interview.common.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,19 @@ public class TestExecutor {
         return function.apply(params);
     }
 
+    public static void runTestCases(Consumer<Object[]> function, Object[][] testCases) {
+        printTestCaseResults(execute(function, testCases));
+    }
+
+    public static <T> List<Object[]> execute(Consumer<Object[]> function, Object[][] testCases) {
+        return Arrays.stream(testCases).peek(function).map(e -> new Object[]{e}).collect(Collectors.toList());
+    }
+
     private static void printTestCaseResults(List<Object[]> testCaseResults) {
+        if (testCaseResults.get(0).length == 1) {
+            testCaseResults.forEach(e -> System.out.println(formatParams((Object[]) e[0])));
+            return;
+        }
         testCaseResults.forEach(e -> System.out.println(formatParams((Object[]) e[0]) + " -> " + formatParam(e[1])));
     }
 
