@@ -14,6 +14,7 @@ public class ValidPalindromeII {
         Function<Object[], Object> function = e -> isValidPalindrome((String) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
     }
+
     public static boolean isValidPalindrome(String str) {
         int i = 0;
         int j = str.length() - 1;
