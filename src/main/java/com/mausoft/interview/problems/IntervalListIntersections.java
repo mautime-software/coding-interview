@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
+ * https://www.educative.io/courses/grokking-coding-interview-patterns-java/solution-interval-list-intersections
+ *
  * For two lists of closed intervals given as input, intervalLista and intervalListb, where each interval has its own start and end time,
  * write a function that returns the intersection of the two interval lists.
  *
