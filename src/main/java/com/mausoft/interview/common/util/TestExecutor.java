@@ -1,38 +1,42 @@
 package com.mausoft.interview.common.util;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class TestExecutor {
-    public static <U> void runTestCases(Function<Object[], U> function, Object[][] testCases) {
-        printTestCaseResults(execute(function, testCases));
+    public static void runTestCases(Function<Object[], Object> function, Object[][] testCases) {
+        Arrays.stream(testCases).map(e -> formatTestCase(function, e)).forEach(System.out::println);
     }
 
-    private static <U> List<TestResults> execute(Function<Object[], U> function, Object[][] testCases) {
-        return Arrays.stream(testCases).map(e -> new TestResults(e, execute(function, e))).collect(Collectors.toList());
+    private static String formatTestCase(Function<Object[], Object> function, Object[] params) {
+        return new StringBuilder(formatTestCaseParams(params)).append(" -> ").append(formatTestCaseResults(execute(function, params))).toString();
     }
-
-    private static <T, U> U execute(Function<T[], U> function, T... params) {
+    private static Object execute(Function<Object[], Object> function, Object... params) {
         return function.apply(params);
     }
 
     public static void runTestCases(Consumer<Object[]> function, Object[][] testCases) {
-        printTestCaseResults(execute(function, testCases));
+        Arrays.stream(testCases).map(e -> formatTestCaseNoRetVal(function, e)).forEach(System.out::println);
     }
 
-    private static List<TestResults> execute(Consumer<Object[]> function, Object[][] testCases) {
-        return Arrays.stream(testCases).peek(function).map(TestResults::new).collect(Collectors.toList());
+    private static String formatTestCaseNoRetVal(Consumer<Object[]> function, Object[] params) {
+        StringBuilder strBuilder = new StringBuilder(formatTestCaseParams(params));
+        execute(function, params);
+        strBuilder.append(" -> ").append(formatTestCaseParams(params));
+        return strBuilder.toString();
     }
 
-    private static void printTestCaseResults(List<TestResults> testCaseResults) {
-        if (testCaseResults.get(0).getResult() == null) {
-            testCaseResults.forEach(e -> System.out.println(formatParams(e.getParams())));
-            return;
-        }
-        testCaseResults.forEach(e -> System.out.println(formatParams(e.getParams()) + " -> " + formatParam(e.getResult())));
+    private static void execute(Consumer<Object[]> function, Object[] params) {
+        function.accept(params);
+    }
+
+    private static String formatTestCaseParams(Object[] testCaseParams) {
+        return formatParam(testCaseParams);
+    }
+
+    private static String formatTestCaseResults(Object testCaseResults) {
+        return formatParam(testCaseResults);
     }
 
     private static String formatParam(Object param) {
@@ -59,27 +63,5 @@ public class TestExecutor {
         strBuilder.delete(strBuilder.length() - 2, strBuilder.length());
         strBuilder.append("]");
         return strBuilder.toString();
-    }
-
-    private static class TestResults {
-        private Object[] params;
-        private Object result;
-
-        public TestResults(Object[] aParams) {
-            params = aParams;
-        }
-
-        public TestResults(Object[] aParams, Object aResult) {
-            params = aParams;
-            result = aResult;
-        }
-
-        public Object[] getParams() {
-            return params;
-        }
-
-        public Object getResult() {
-            return result;
-        }
     }
 }
