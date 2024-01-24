@@ -22,7 +22,6 @@ import java.util.function.Function;
  * 7 -> 8 -> 1 -> 5 -> 6 -> 1
  */
 public class ReorderLinkedList {
-    private static ListNode<Integer> slow;
 
     public static void main(String... args) {
         Function<Object[], Object> function = e -> reorder((ListNode<Integer>) e[0]);
