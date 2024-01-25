@@ -12,7 +12,7 @@ import java.util.function.Function;
  */
 public class RemoveNthNode {
     public static void main(String... args) {
-        Function<Object[], Object> function = e -> removeNthNode((ListNode<Integer>) e[0], (Integer) e[1]);
+        Function<Object[], Object> function = e -> removeNthNodeOptimized((ListNode<Integer>) e[0], (Integer) e[1]);
         TestExecutor.runTestCases(function, dataProvider());
     }
 
@@ -40,6 +40,29 @@ public class RemoveNthNode {
             rNode = rNode.next();
         }
         lNode.next(lNode.next().next());
+        return head;
+    }
+
+    public static ListNode<Integer> removeNthNodeOptimized(ListNode<Integer> head, int k) {
+        int count = 0;
+        ListNode<Integer> node = head;
+        ListNode<Integer> end = null;
+        ListNode<Integer> prev = null;
+        while (node != null) {
+            count++;
+            if (end != null) {
+                prev = end;
+                end = end.next();
+            }
+            if (count == k) {
+                end = head;
+            }
+            node = node.next();
+        }
+        if (prev == null) {
+            return head.next();
+        }
+        prev.next(end.next());
         return head;
     }
 }
