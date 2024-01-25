@@ -15,6 +15,10 @@ public class ListNode<T> {
         return value;
     }
 
+    public void setValue(T aValue) {
+        value = aValue;
+    }
+
     public ListNode<T> next() {
         return next;
     }
