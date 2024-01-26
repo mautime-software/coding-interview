@@ -21,6 +21,7 @@ public class MeetingRoomsII {
         Function<Object[], Object> function = e -> calculateMeetingRooms((List<Interval>) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
     }
+
     public static int calculateMeetingRooms(List<Interval> meetings) {
         meetings.sort(Comparator.comparingInt(Interval::getStart));
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
