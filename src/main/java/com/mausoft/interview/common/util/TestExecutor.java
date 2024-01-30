@@ -55,6 +55,9 @@ public class TestExecutor {
     }
 
     private static String formatParams(Object[] arr) {
+        if (arr.length == 0) {
+            return "[]";
+        }
         StringBuilder strBuilder = new StringBuilder("[");
         for (Object item : arr) {
             strBuilder.append(formatParam(item));
