@@ -20,8 +20,19 @@ public class Knapsack {
     }
     public static int knapsack(int[] weight, int[] values, int capacity) {
         int[][] dp = new int[values.length + 1][capacity + 1];
-
         return maxProfitDynamicProgramming(weight, values, capacity, 0, dp);
+    }
+
+    public static int maxProfitRecursive(int[] weight, int[] values, int capacity, int i) {
+        if (capacity < 0 || i == values.length) {
+            return 0;
+        }
+        int profits = 0;
+        if (weight[i] <= capacity) {
+            profits = values[i] + maxProfitRecursive(weight, values, capacity - weight[i], i + 1);
+        }
+        int profits2 = maxProfitRecursive(weight, values, capacity, i + 1);
+        return Math.max(profits, profits2);
     }
 
     public static int maxProfitDynamicProgramming(int[] weight, int[] values, int capacity, int i, int[][] dp) {
