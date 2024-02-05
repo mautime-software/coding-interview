@@ -51,4 +51,18 @@ public class TreeNode<T> {
     public static <T> TreeNode<T> from(T value) {
         return from(value, null, null);
     }
+
+    public static <T> TreeNode<T> from(T... values) {
+        return buildNode(values, 0);
+    }
+
+    private static <T> TreeNode<T> buildNode(T[] values, int i) {
+        if (i >= values.length) {
+            return null;
+        }
+        TreeNode<T> node = from(values[i]);
+        node.setLeft(buildNode(values, (2 * i) + 1));
+        node.setRight(buildNode(values, (2 * i) + 2));
+        return node;
+    }
 }
