@@ -1,9 +1,9 @@
 package com.mausoft.interview.common.util;
 
 public class TreeNode<T> {
-    public T value;
-    public TreeNode<T> left;
-    public TreeNode<T> right;
+    private T value;
+    private TreeNode<T> left;
+    private TreeNode<T> right;
 
     public TreeNode(T aValue) {
         value = aValue;
@@ -39,14 +39,9 @@ public class TreeNode<T> {
 
     @Override
     public String toString() {
-        return "[" + _toString() + "]";
-    }
-
-    private String _toString() {
-        String strBuilder = String.valueOf(value);
-        strBuilder += left != null ? ", l" + left._toString() : "";
-        strBuilder += right != null ? ", r" + right._toString() : "";
-        return strBuilder;
+        return String.format("{%s%s%s}", "\"value\": " + value,
+                (left != null ? ", \"left\": " + left : ""),
+                (right != null ? ", \"right\": " + right : ""));
     }
 
     public static <T> TreeNode<T> from(T value, TreeNode<T> left, TreeNode<T> right) {
