@@ -12,7 +12,7 @@ import java.util.function.Function;
  *
  * In a height-balanced BST, the difference of heights of the left subtree and right subtree of any node is not more than 1.
  */
-public class ConvertSortedArrayToBTS {
+public class ConvertSortedArrayToBST {
     public static void main(String... args) {
         Function<Object[], Object> function = e -> convert((int[]) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
