@@ -20,15 +20,15 @@ import static com.mausoft.interview.common.util.TreeNode.*;
  */
 public class ValidateBinarySearchTree {
     public static void main(String... args) {
-        Function<Object[], Object> function = e -> isValidBTS((TreeNode<Integer>) e[0]);
+        Function<Object[], Object> function = e -> isValidBST((TreeNode<Integer>) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
     }
 
-    public static boolean isValidBTS(TreeNode<Integer> node) {
+    public static boolean isValidBST(TreeNode<Integer> node) {
         if (node == null) {
             return true;
         }
-        if (isValidBTS(node.getLeft()) && isValidBTS(node.getRight())) {
+        if (isValidBST(node.getLeft()) && isValidBST(node.getRight())) {
             return validateLeft(node) && validateRight(node);
         }
         return false;
