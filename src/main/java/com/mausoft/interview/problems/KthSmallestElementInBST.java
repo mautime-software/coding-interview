@@ -13,7 +13,7 @@ import static com.mausoft.interview.common.util.TreeNode.*;
  *
  * Given the root node of a binary search tree and an integer value k, return the kth smallest value in the tree
  */
-public class KthSmallestElementInBTS {
+public class KthSmallestElementInBST {
     public static void main(String... args) {
         Function<Object[], Object> function = e -> min((TreeNode<Integer>) e[0], (int) e[1]);
         TestExecutor.runTestCases(function, dataProvider());
