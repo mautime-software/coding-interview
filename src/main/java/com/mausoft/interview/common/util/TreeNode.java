@@ -4,6 +4,7 @@ public class TreeNode<T> {
     private T value;
     private TreeNode<T> left;
     private TreeNode<T> right;
+    private TreeNode<T> next;
 
     public TreeNode(T aValue) {
         value = aValue;
@@ -37,11 +38,26 @@ public class TreeNode<T> {
         return this;
     }
 
+    public TreeNode<T> setValue(T aValue) {
+        value = aValue;
+        return this;
+    }
+
+    public TreeNode<T> getNext() {
+        return next;
+    }
+
+    public TreeNode<T> setNext(TreeNode<T> aNext) {
+        next = aNext;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return String.format("{%s%s%s}", "\"value\": " + value,
+        return String.format("{%s%s%s%s}", "\"value\": " + value,
                 (left != null ? ", \"left\": " + left : ""),
-                (right != null ? ", \"right\": " + right : ""));
+                (right != null ? ", \"right\": " + right : ""),
+                (next != null ? ", \"next\": " + next : ""));
     }
 
     public static <T> TreeNode<T> from(T value, TreeNode<T> left, TreeNode<T> right) {
