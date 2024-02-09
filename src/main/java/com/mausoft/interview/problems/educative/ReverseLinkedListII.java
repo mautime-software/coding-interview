@@ -15,30 +15,30 @@ public class ReverseLinkedListII {
         TestExecutor.runTestCases(function, dataProvider());
     }
     public static ListNode<Integer> reverse(ListNode<Integer> head, int a, int b) {
-        ListNode<Integer> left = head;
         ListNode<Integer> pLeft = null;
+        ListNode<Integer> left = head;
         for (int i = 1; i < a; i++) {
             pLeft = left;
             left = left.next();
         }
         ListNode<Integer> right = head;
-        ListNode<Integer> pRight = null;
+        ListNode<Integer> pRight = head.next();
         for (int i = 1; i < b; i++) {
             right = right.next();
             pRight = right.next();
         }
-        ListNode<Integer> reversed = reverse(left, right.next());
-        if (pLeft != null) {
-            pLeft.next(reversed);
-        } else {
+        ListNode<Integer> reversed = reverse(left, right);
+        if (pLeft == null) {
             head = reversed;
+        } else {
+            pLeft.next(reversed);
         }
         left.next(pRight);
         return head;
     }
 
     private static ListNode<Integer> reverse(ListNode<Integer> node, ListNode<Integer> stop) {
-        if (node.next() == stop) {
+        if (node == stop) {
             return node;
         }
         ListNode<Integer> reversed = reverse(node.next(), stop);
