@@ -38,14 +38,8 @@ public class UniquePaths {
         if (x == grid.length - 1 && y == grid[0].length - 1) {
             return 1;
         }
-        int exp1 = explore(grid, x, y + 1, dp);
-        if (exp1 > 0) {
-            dp[x][y] += exp1;
-        }
-        int exp2 = explore(grid, x + 1, y, dp);
-        if (exp2 > 0) {
-            dp[x][y] += exp2;
-        }
+        dp[x][y] += explore(grid, x, y + 1, dp);
+        dp[x][y] += explore(grid, x + 1, y, dp);
         return dp[x][y];
     }
 
