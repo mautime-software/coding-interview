@@ -12,13 +12,37 @@ import java.util.function.Function;
  * You need to find the number of subarrays in A having sum less than B. We may assume that there is no overflow.
  *
  * #uber
- *
- * //TODO Implement sliding window approach
  */
 public class CountingSubarrays {
     public static void main(String... args) {
-        Function<Object[], Object> function = e -> count((int[]) e[0], (int) e[1]);
+        Function<Object[], Object> function = e -> countSliding((int[]) e[0], (int) e[1]);
         TestExecutor.runTestCases(function, dataProvider());
+    }
+
+    public static int countSliding(int[] nums, int target) { //O(n) - Sliding Window
+        int i = 0;
+        int j = 0;
+        int sum = 0;
+        int result = 0;
+        while (j < nums.length) {
+            sum += nums[j];
+            while (sum >= target && i <= j) {
+                if (nums[i] < target) {
+                    result += (j - i);
+                }
+                sum -= nums[i];
+                i++;
+            }
+            j++;
+        }
+        while (i < nums.length) {
+            if (sum < target) {
+                result += (j - i);
+            }
+            sum -= nums[i];
+            i++;
+        }
+        return result;
     }
 
     public static int count(int[] nums, int target) {
