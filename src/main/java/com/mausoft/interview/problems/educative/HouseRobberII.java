@@ -15,8 +15,35 @@ import java.util.function.Function;
  */
 public class HouseRobberII {
     public static void main(String... args) {
-        Function<Object[], Object> function = e -> maxAmount((int[]) e[0]);
+        Function<Object[], Object> function = e -> maxAmountDp((int[]) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
+    }
+
+    public static int maxAmountDp(int[] houses) {
+        if (houses == null || houses.length == 0) {
+            return 0;
+        }
+        if (houses.length == 1) {
+            return houses[0];
+        }
+        if (houses.length == 2) {
+            return Math.max(houses[0], houses[1]);
+        }
+        //start robbing from first house, skipping last
+        int[] dp1 = new int[houses.length];
+        dp1[0] = houses[0];
+        dp1[1] = Math.max(houses[0], houses[1]);
+        for (int i = 2; i < houses.length - 1; i++) {
+            dp1[i] = Math.max(dp1[i - 1], dp1[i - 2] + houses[i]); //max amount I have robbed at each house
+        }
+        //start robbing from second house, include last
+        int[] dp2 = new int[houses.length];
+        dp2[1] = houses[1];
+        dp2[2] = Math.max(houses[1], houses[2]);
+        for (int i = 3; i < houses.length; i++) {
+            dp2[i] = Math.max(dp2[i - 1], dp2[i - 2] + houses[i]);
+        }
+        return Math.max(dp1[houses.length - 2], dp2[houses.length - 1]);
     }
 
     public static int maxAmount(int[] houses) { // O(2n)
