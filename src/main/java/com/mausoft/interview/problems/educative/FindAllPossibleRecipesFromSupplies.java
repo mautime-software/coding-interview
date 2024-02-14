@@ -47,7 +47,7 @@ public class FindAllPossibleRecipesFromSupplies {
     private static Map<String, Integer> buildIndegreeMatrix(String[] recipes, List<List<String>> ingredients) {
         Map<String, Integer> indegreeMatrix = new HashMap<>();
         for (int i = 0; i < recipes.length; i++) {
-            indegreeMatrix.put(recipes[i], ingredients.get(0).size());
+            indegreeMatrix.put(recipes[i], ingredients.get(i).size());
         }
         return indegreeMatrix;
     }
