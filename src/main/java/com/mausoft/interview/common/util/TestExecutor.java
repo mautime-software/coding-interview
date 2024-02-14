@@ -3,6 +3,7 @@ package com.mausoft.interview.common.util;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 public class TestExecutor {
     public static void runTestCases(Function<Object[], Object> function, Object[][] testCases) {
@@ -50,6 +51,9 @@ public class TestExecutor {
     private static Object[] convertToGenericArray(Object arr) {
         if (arr instanceof int[]) {
             return Arrays.stream(((int[]) arr)).boxed().toArray();
+        }
+        if (arr instanceof char[]) {
+            return IntStream.range(0, ((char[]) arr).length).mapToObj(e -> ((char[])arr)[e]).toArray();
         }
         return (Object[]) arr;
     }
