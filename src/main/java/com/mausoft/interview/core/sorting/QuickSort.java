@@ -33,14 +33,14 @@ public class QuickSort {
 
     private static int partition(int[] nums, int start, int end) {
         int pivot = nums[end];
-        int i = start - 1;
+        int i = start;
         for (int j = start; j < end; j++) {
             if (nums[j] < pivot) {
-                i++;
                 swap(nums, i, j);
+                i++;
             }
         }
-        swap(nums, i + 1, end);
-        return i + 1;
+        swap(nums, i, end);
+        return i;
     }
 }
