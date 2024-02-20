@@ -16,7 +16,6 @@ import java.util.function.Function;
  */
 public class GasStations {
     public static void main(String... args) {
-        System.out.println((262114 + 1) % 262114);
         Function<Object[], Object> function = e -> gasStations((int[]) e[0], (int[]) e[1]);
         TestExecutor.runTestCases(function, dataProvider());
     }
