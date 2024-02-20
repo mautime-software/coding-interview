@@ -12,8 +12,12 @@ import java.util.function.Function;
  */
 public class SpiralMatrix {
     public static void main(String... args) {
+        System.out.println("====================================== SOLUTION ======================================");
         Function<Object[], Object> function = e -> spiralMatrix((int[][]) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
+        System.out.println("====================================== ALTERNATIVE SOLUTION ======================================");
+        Function<Object[], Object> alternativeFunction = e -> spiralMatrixAlternative((int[][]) e[0]);
+        TestExecutor.runTestCases(alternativeFunction, dataProvider());
     }
 
     public static int[] spiralMatrix(int[][] array) {
@@ -36,6 +40,30 @@ public class SpiralMatrix {
             i++;
         }
         return result;
+    }
+
+    public static int[] spiralMatrixAlternative(int[][] matrix) {
+        int j = 0;
+        int row = 0;
+        int col = -1;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int direction = 1;
+        int[] results = new int[rows * cols];
+        while (rows > 0 && cols > 0) {
+            for (int i = 0; i < cols; i++) {
+                col += direction;
+                results[j++] = matrix[row][col];
+            }
+            rows--;
+            for (int i = 0; i < rows; i++) {
+                row += direction;
+                results[j++] = matrix[row][col];
+            }
+            cols--;
+            direction *= -1;
+        }
+        return results;
     }
 
     private static Object[][] dataProvider() {
