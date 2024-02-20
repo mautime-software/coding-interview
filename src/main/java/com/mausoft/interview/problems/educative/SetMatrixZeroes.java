@@ -8,8 +8,51 @@ import java.util.function.Consumer;
 
 public class SetMatrixZeroes {
     public static void main(String... args) {
-        Consumer<Object[]> consumer = e -> setZeroes((int[][]) e[0]);
+        Consumer<Object[]> consumer = e -> setZeroesOptimized((int[][]) e[0]);
         TestExecutor.runTestCases(consumer, dataProvider());
+    }
+
+    public static void setZeroesOptimized(int[][] array) {
+        boolean fRow = false;
+        for (int i = 0; i < array[0].length; i++) {
+            if (array[0][i] == 0) {
+                fRow = true;
+                break;
+            }
+        }
+        boolean fCol = false;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i][0] == 0) {
+                fCol = true;
+            }
+        }
+
+        for (int i = 1; i < array.length; i++) {
+            for (int j = 1; j < array[i].length; j++) {
+                if (array[i][j] == 0) {
+                    array[i][0] = 0;
+                    array[0][j] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < array.length; i++) {
+            for (int j = 1; j < array[i].length; j++) {
+                if (array[0][j] == 0 || array[i][0] == 0) {
+                    array[i][j] = 0;
+                }
+            }
+        }
+
+        if (fRow) {
+            for (int i = 0; i < array[0].length; i++) {
+                array[0][i] = 0;
+            }
+        }
+        if (fCol) {
+            for (int i = 0; i < array.length; i++) {
+                array[i][0] = 0;
+            }
+        }
     }
 
     public static void setZeroes(int[][] array) {
