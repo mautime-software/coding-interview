@@ -18,10 +18,9 @@ public class LongestIncreasingSubsequence {
     }
 
     public static int longestSubsequence(int[] nums) { // O(n^2)
-        int max = Integer.MIN_VALUE;
+        int max = 1;
         int[] dp = new int[nums.length];
-        dp[0] = 1;
-        for (int j = 1; j < nums.length; j++) {
+        for (int j = 0; j < nums.length; j++) {
             dp[j] = 1;
             for (int i = 0; i < j; i++) {
                 if (nums[j] > nums[i]) {
