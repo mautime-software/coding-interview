@@ -13,6 +13,8 @@ import java.util.function.Function;
  * Now consider if some obstacles are added to the grids. How many unique paths would there be?
  *
  * An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+ *
+ * TODO - Alternative solution without DP
  */
 public class UniquePaths {
     public static void main(String... args) {
