@@ -19,7 +19,11 @@ import java.util.function.Function;
  */
 public class MinJumpsArray {
     public static void main(String... args) {
+        System.out.println("============================================== RECURSIVE SOLUTION ==============================================");
         Function<Object[], Object> function = e -> RecursiveSolution.minJumps((int[]) e[0]);
+        TestExecutor.runTestCases(function, dataProvider());
+        System.out.println("============================================== RECURSIVE DYNAMIC PROGRAMMING SOLUTION ==============================================");
+        function = e -> RecursiveSolution.minJumps((int[]) e[0]);
         TestExecutor.runTestCases(function, dataProvider());
     }
 
@@ -44,6 +48,37 @@ public class MinJumpsArray {
                 }
             }
             return min != Integer.MAX_VALUE ? min : -1;
+        }
+    }
+
+    private static class RecursiveDPSolution {
+        public static int minJumps(int[] nums) {
+            return minJumpsRecursive(nums, 0, new int[nums.length]);
+        }
+
+        private static int minJumpsRecursive(int[] nums, int i, int[] jumps) { //O(2^n) exponential
+            if (i >= nums.length - 1) {
+                return 0;
+            }
+            if (nums[i] == 0) {
+                return -1;
+            }
+
+            if (jumps[i] != 0) {
+                return jumps[i];
+            }
+
+            int farthestJump = Math.min(nums[i] + i, nums.length - 1);
+            int min = Integer.MAX_VALUE;
+            for (int j = i + 1; j <= farthestJump; j++) {
+                int c1 = minJumpsRecursive(nums, j, jumps);
+                if (c1 != -1) {
+                    min = Math.min(min, c1 + 1);
+                }
+            }
+            min = min != Integer.MAX_VALUE ? min : -1;
+            jumps[i] = min;
+            return min;
         }
     }
 
